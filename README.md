@@ -1,11 +1,11 @@
-#MINI GAME HUB
-##Keshav Bansal
-##Arnav Jindal
+# MINI GAME HUB
+## Keshav Bansal
+## Arnav Jindal
 
 This project is a multi-user game hub that combines Bash scripting and Python.
 It allows two users to log in, choose a game, play through a graphical interface, and view their results on a leaderboard.
 
-##Features
+## Features
 	• Secure user authentication (SHA-256 hashed passwords)
 	• Two-player system
 	
