@@ -157,42 +157,36 @@ def draw_board(game):
         cy = GRID_Y + r*CELL + CELL//2
         pygame.draw.circle(WIN, GRAY, (cx, cy), 5)
 
-
 def draw_status(game):
-    p1, p2 = game.score()
-
-    left_text  = f"{game.player1}: {p1}"
-    right_text = f"{game.player2}: {p2}"
-
-    left_surf  = FONT.render(left_text, True, (0,255,255))
-    right_surf = FONT.render(right_text, True, (0,255,255))
-
-    left_x  = 50
-    right_x = WIDTH - right_surf.get_width() - 50
-    y = 30
-
-    # --- BLACK DISC (Player 1) ---
-
-
-    WIN.blit(left_surf, (left_x, y))
-
-    # --- WHITE DISC (Player 2) ---
-    wx = right_x + right_surf.get_width() + 25
-    wy = y + 12
-    WIN.blit(right_surf, (right_x, y))
-
-    # --- UNDERLINE CURRENT PLAYER ---
-    if game.current_player == 1:
-        # underline left (black)
-        pygame.draw.line(WIN, (0,255,255),
-            (left_x, y + left_surf.get_height() + 5),
-            (left_x + left_surf.get_width(), y + left_surf.get_height() + 5), 3)
-
-    else:
-        # underline right (white)
-        pygame.draw.line(WIN, (0,255,255),
-            (right_x, y + right_surf.get_height() + 5),
-            (right_x + right_surf.get_width(), y + right_surf.get_height() + 5), 3)
+    # 1. Get the current scores
+    p1_count, p2_count = game.score()
+    
+    # 2. Define positions (Adjusted for your 600px width window)
+    # Player 1 box center is roughly at 1/4 width, Player 2 at 3/4 width
+    P1_POS = (WIDTH // 4 + 170, 52) 
+    P2_POS = (3 * WIDTH // 4 + 50, 52)
+    
+    # 3. Use a classic serif font for the "scroll" look
+    # We use .zfill(2) to keep the 00, 01, 02 formatting
+    score_font = pygame.font.SysFont("verdana", 20, bold=True)
+    GOLD = (218, 165, 32) # Matches the UI borders
+    
+    # 4. Render and Center
+    p1_surf = score_font.render(str(p1_count).zfill(2), True, GOLD)
+    p2_surf = score_font.render(str(p2_count).zfill(2), True, GOLD)
+    
+    p1_rect = p1_surf.get_rect(center=P1_POS)
+    p2_rect = p2_surf.get_rect(center=P2_POS)
+    
+    # 5. Draw to window
+    WIN.blit(p1_surf, p1_rect)
+    WIN.blit(p2_surf, p2_rect)
+    
+    # Optional: Display Game Over message
+    if game.game_over:
+        msg = "GAME OVER!" if p1_count != p2_count else "DRAW!"
+        over_surf = FONT.render(msg, True, (255, 0, 0))
+        WIN.blit(over_surf, (WIDTH//2 - over_surf.get_width()//2, 10))
     
 
 
