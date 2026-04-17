@@ -11,7 +11,7 @@ WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("10x10 Tic Tac Toe")
 
 # background image
-IMG_PATH   = os.path.join("tictactoe.png")
+IMG_PATH   = os.path.join("games/bg_images/tictactoe.png")
 
 BG = pygame.image.load(IMG_PATH).convert()
 
