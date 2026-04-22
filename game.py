@@ -3,8 +3,8 @@ import pygame
 import random
 from datetime import date
 
-from games.othello import Othello  
 
+from games.othello import Othello  
 bg_color = (5,5,30)
 white = (255,255,255)
 light_blue = (200,200,255)
@@ -95,20 +95,19 @@ def main():
 
         mouse_pos = pygame.mouse.get_pos()
 
-        # ── BACKGROUND ──
+       
         screen.fill(bg_color)
 
-        # stars
+       
         stars = [(random.randint(0,1000), random.randint(0,700)) for _ in range(150)]
         for star in stars:
             pygame.draw.circle(screen, light_blue, star, 1)
         
-        # ── TITLE ──
         title_width = title.get_width()
         x = (1000 - title_width)//2
         screen.blit(title, (x,80))
         
-        # ── CONNECT4 BUTTON ──
+      
         connect4_width = connect4_button.get_width()
         x = (1000 - connect4_width)//2
         connect4_rect = pygame.Rect(x-10,210,connect4_width+20,52)
@@ -120,7 +119,7 @@ def main():
         )
         screen.blit(connect4_button, (x,220))
         
-        # ── TIC TAC TOE BUTTON ──
+      
         tictactoe_width = tictactoe_button.get_width()
         x = (1000 - tictactoe_width)//2
         tictactoe_rect = pygame.Rect(x-10,310,tictactoe_width+20,52)
@@ -132,7 +131,7 @@ def main():
         )
         screen.blit(tictactoe_button, (x,320))
         
-        # ── OTHELLO BUTTON ──
+       
         othello_width = othello_button.get_width()
         x = (1000 - othello_width)//2
         othello_rect = pygame.Rect(x-10,410,othello_width+20,52)

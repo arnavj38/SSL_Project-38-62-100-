@@ -5,19 +5,19 @@ import os
 
 pygame.init()
 
-# ── Window ──
+
 WIDTH, HEIGHT = 1000, 700
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Othello")
 
-# ── Grid ──
+
 GRID_SIZE = 578
 GRID_N = 8
 CELL = GRID_SIZE // GRID_N
 GRID_X = (WIDTH - GRID_SIZE) // 2
 GRID_Y = 72
 
-# ── Colors ──
+
 GREEN = (0, 120, 0)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -29,13 +29,13 @@ BG_IMAGE = pygame.transform.scale(BG_IMAGE, (WIDTH,HEIGHT))
 
 FONT = pygame.font.SysFont("consolas", 22, bold=True)
 
-# ── Directions (8 directions) ──
+
 DIRS = [(-1,-1), (-1,0), (-1,1),
         (0,-1),         (0,1),
         (1,-1), (1,0),  (1,1)]
 
 
-# ── Base Class ──
+
 class BoardGame:
     def __init__(self, p1, p2, size):
         self.player1 = p1
@@ -50,6 +50,7 @@ class BoardGame:
 # ── Othello Class ──
 class Othello(BoardGame):
     def __init__(self, p1, p2):
+        print("Othello class loaded")
         super().__init__(p1, p2, GRID_N)
         self.init_board()
         self.game_over = False
@@ -125,13 +126,45 @@ class Othello(BoardGame):
         p1 = np.sum(self.board == 1)
         p2 = np.sum(self.board == 2)
         return p1, p2
+    
+    def run(self, screen):
+        print("RUN METHOD CALLED") 
+        clock = pygame.time.Clock()
+
+        while True:
+            clock.tick(60)
+            draw_board(self)
+            draw_status(self)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    return None, None
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    cell = pixel_to_cell(*event.pos)
+                    if cell and not self.game_over:
+                        self.place(*cell)
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_r:
+                        self.__init__(self.player1, self.player2)
+
+            if self.game_over:
+                p1, p2 = self.score()
+                if p1 > p2:
+                    return self.player1, self.player2
+                elif p2 > p1:
+                    return self.player2, self.player1
+                else:
+                    return "Draw", "Draw"
+
+            pygame.display.update()
 
 
-# ── Drawing ──
 def draw_board(game):
     WIN.blit(BG_IMAGE, (0, 0))
 
-    # Grid
+    
     for i in range(GRID_N + 1):
         pygame.draw.line(WIN, BLACK,
             (GRID_X, GRID_Y + i*CELL),
@@ -141,7 +174,7 @@ def draw_board(game):
             (GRID_X + i*CELL, GRID_Y),
             (GRID_X + i*CELL, GRID_Y + GRID_SIZE), 2)
 
-    # Discs
+    
     for r in range(GRID_N):
         for c in range(GRID_N):
             if game.board[r][c] != 0:
@@ -150,24 +183,22 @@ def draw_board(game):
                 cy = GRID_Y + r*CELL + CELL//2
                 pygame.draw.circle(WIN, color, (cx, cy), CELL//2 - 5)
 
-    # Highlight valid moves
+   
     for r, c in game.valid_moves(game.current_player):
         cx = GRID_X + c*CELL + CELL//2
         cy = GRID_Y + r*CELL + CELL//2
         pygame.draw.circle(WIN, GRAY, (cx, cy), 5)
 
 def draw_status(game):
-    # 1. Get the current scores
+   
     p1_count, p2_count = game.score()
     
-    # 2. Define positions (Adjusted for your 600px width window)
-    # Player 1 box center is roughly at 1/4 width, Player 2 at 3/4 width
-    P1_POS = (WIDTH // 4 + 170, 52) 
-    P2_POS = (3 * WIDTH // 4 + 50, 52)
+  
+    P1_POS = (105, 430) 
+    P2_POS = (884, 430)
     
-    # 3. Use a classic serif font for the "scroll" look
-    # We use .zfill(2) to keep the 00, 01, 02 formatting
-    score_font = pygame.font.SysFont("verdana", 20, bold=True)
+ 
+    score_font = pygame.font.SysFont("verdana", 50, bold=True)
     GOLD = (218, 165, 32) # Matches the UI borders
     
     # 4. Render and Center
@@ -177,46 +208,21 @@ def draw_status(game):
     p1_rect = p1_surf.get_rect(center=P1_POS)
     p2_rect = p2_surf.get_rect(center=P2_POS)
     
-    # 5. Draw to window
+    
     WIN.blit(p1_surf, p1_rect)
     WIN.blit(p2_surf, p2_rect)
     
-    # Optional: Display Game Over message
+    
     if game.game_over:
         msg = "GAME OVER!" if p1_count != p2_count else "DRAW!"
         over_surf = FONT.render(msg, True, (255, 0, 0))
         WIN.blit(over_surf, (WIDTH//2 - over_surf.get_width()//2, 10))
     
-def run(self, screen):
-    clock = pygame.time.Clock()
-
-    while True:
-        clock.tick(60)
-        draw_board(self)
-        draw_status(self)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                return None, None
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                cell = pixel_to_cell(*event.pos)
-                if cell and not self.game_over:
-                    self.place(*cell)
-
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_r:
-                    self.__init__(self.player1, self.player2)
-
-        if self.game_over:
-            p1, p2 = self.score()
-            if p1 > p2:
-                return self.player1, self.player2
-            elif p2 > p1:
-                return self.player2, self.player1
-            else:
-                return "Draw", "Draw"
-
-        pygame.display.update()
+def pixel_to_cell(x, y):
+    if GRID_X <= x <= GRID_X + GRID_SIZE and GRID_Y <= y <= GRID_Y + GRID_SIZE:
+        c = (x - GRID_X) // CELL
+        r = (y - GRID_Y) // CELL
+        return int(r), int(c)
+    return None
 
 
