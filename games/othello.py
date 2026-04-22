@@ -6,16 +6,16 @@ import os
 pygame.init()
 
 # ── Window ──
-WIDTH, HEIGHT = 600, 650
+WIDTH, HEIGHT = 1000, 700
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Othello")
 
 # ── Grid ──
-GRID_SIZE = 480
+GRID_SIZE = 578
 GRID_N = 8
 CELL = GRID_SIZE // GRID_N
 GRID_X = (WIDTH - GRID_SIZE) // 2
-GRID_Y = 100
+GRID_Y = 72
 
 # ── Colors ──
 GREEN = (0, 120, 0)
@@ -23,7 +23,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GRAY  = (180, 180, 180)
 
-BG_PATH = os.path.join("othello.png")
+BG_PATH = os.path.join("games/othello.png")
 BG_IMAGE = pygame.image.load(BG_PATH)
 BG_IMAGE = pygame.transform.scale(BG_IMAGE, (WIDTH,HEIGHT))
 
@@ -188,38 +188,36 @@ def draw_status(game):
         over_surf = FONT.render(msg, True, (255, 0, 0))
         WIN.blit(over_surf, (WIDTH//2 - over_surf.get_width()//2, 10))
     
-
-
-# ── Helpers ──
-def pixel_to_cell(px, py):
-    if GRID_X <= px < GRID_X + GRID_SIZE and GRID_Y <= py < GRID_Y + GRID_SIZE:
-        return (py - GRID_Y)//CELL, (px - GRID_X)//CELL
-    return None
-
-
-# ── Run Game ──
-def run_game(player1="Player 1", player2="Player 2"):
-    game = Othello(player1, player2)
+def run(self, screen):
     clock = pygame.time.Clock()
 
     while True:
         clock.tick(60)
-        draw_board(game)
-        draw_status(game)
+        draw_board(self)
+        draw_status(self)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                return
+                return None, None
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 cell = pixel_to_cell(*event.pos)
-                if cell and not game.game_over:
-                    game.place(*cell)
+                if cell and not self.game_over:
+                    self.place(*cell)
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
-                    game = Othello(player1, player2)
+                    self.__init__(self.player1, self.player2)
+
+        if self.game_over:
+            p1, p2 = self.score()
+            if p1 > p2:
+                return self.player1, self.player2
+            elif p2 > p1:
+                return self.player2, self.player1
+            else:
+                return "Draw", "Draw"
 
         pygame.display.update()
-if __name__ == "__main__":
-    run_game()
+
+
