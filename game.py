@@ -3,8 +3,7 @@ import pygame
 import random
 from datetime import date
 
-# IMPORT YOUR GAMES
-from games.othello import Othello   # ✅ ADD THIS
+from games.othello import Othello  
 
 bg_color = (5,5,30)
 white = (255,255,255)

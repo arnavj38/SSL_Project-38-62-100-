@@ -23,8 +23,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GRAY  = (180, 180, 180)
 
-BG_PATH = os.path.join("games/othello.png")
-BG_IMAGE = pygame.image.load(BG_PATH)
+BG_IMAGE = pygame.image.load("games/bg_images/othello.png")
 BG_IMAGE = pygame.transform.scale(BG_IMAGE, (WIDTH,HEIGHT))
 
 
