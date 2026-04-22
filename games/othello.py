@@ -50,7 +50,7 @@ class BoardGame:
 # ── Othello Class ──
 class Othello(BoardGame):
     def __init__(self, p1, p2):
-        print("Othello class loaded")
+
         super().__init__(p1, p2, GRID_N)
         self.init_board()
         self.game_over = False
@@ -128,7 +128,7 @@ class Othello(BoardGame):
         return p1, p2
     
     def run(self, screen):
-        print("RUN METHOD CALLED") 
+     
         clock = pygame.time.Clock()
 
         while True:
