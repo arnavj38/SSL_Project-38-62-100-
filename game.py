@@ -44,18 +44,17 @@ def main():
     pygame.init()
     title_font = pygame.font.SysFont("Arial", 48)
     button_font = pygame.font.SysFont("Arial", 32)
-    screen = pygame.display.set_mode((900,600))
+    screen = pygame.display.set_mode((1000,700))
     pygame.display.set_caption("Mini Game Hub")
     clock = pygame.time.Clock()
 
-    title = title_font.render("Mini Game Hub", True, cyan)
-    connect4_button = button_font.render("Connect-4", True, white)
-    tictactoe_button = button_font.render("Tic-Tac-Toe", True, white)
-    othello_button = button_font.render("Othello", True, white)
+    bg = pygame.image.load("mainmenu_final_1000x700.png")
+#    connect4_img = pygame.image.load("connect4_button.png")
 
-    connect4_rect = None
-    tictactoe_rect = None
-    othello_rect = None
+    connect4_rect  = pygame.Rect(349, 234, 302, 87)
+    othello_rect   = pygame.Rect(349, 336, 398, 79)
+    tictactoe_rect = pygame.Rect(352, 434, 388, 81)
+    quit_rect = pygame.Rect(17,18,118,67)
     
     game_running = True
     while game_running:
@@ -66,6 +65,9 @@ def main():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_x, mouse_y = pygame.mouse.get_pos()
+                if quit_rect.collidepoint(mouse_x, mouse_y):
+                    pygame.quit()
+                    sys.exit()
                 if connect4_rect.collidepoint(mouse_x, mouse_y):
                     print("Connect4 selected.")
                     game = Connect4(player1, player2)
@@ -73,24 +75,19 @@ def main():
                     record_result(winner, loser, "Connect-4")
                 if tictactoe_rect.collidepoint(mouse_x, mouse_y):
                     print("Tic-Tac-Toe selected.")
+#                    game = tictactoe(player1, player2)
+#                    winner, loser = game.run(screen)
+#                    record_result(winner, loser, "Connect-4")
                 if othello_rect.collidepoint(mouse_x, mouse_y):
                     print("Othello selected.")
+#                    game = othello(player1, player2)
+#                    winner, loser = game.run(screen)
+#                    record_result(winner, loser, "Connect-4")
 
         mouse_pos = pygame.mouse.get_pos()
+        screen.blit(bg,(0,0))
 
-        pygame.draw.rect(screen, bg_color,(0,0, 900,600))
-
-        stars = [(random.randint(0,900), random.randint(0,600)) for _ in range(150)]
-        for star in stars:
-            pygame.draw.circle(screen, light_blue, star, 1)
-        
-        title_width = title.get_width()
-        x = (900 - title_width)//2
-        screen.blit(title, (x,80))
-        
-        connect4_width = connect4_button.get_width()
-        x = (900 - connect4_width)//2
-        connect4_rect = pygame.Rect(x-10,210,connect4_width+20,52)
+        """
         if connect4_rect.collidepoint(mouse_pos):
             pygame.draw.rect(screen, button_hover, (x-10,210,connect4_width+20,52))
         else:
@@ -114,7 +111,7 @@ def main():
         else:
             pygame.draw.rect(screen, button_panel, (x-10,410,othello_width+20,52))
         screen.blit(othello_button, (x,420))
-        
+        """
         pygame.display.flip()
         clock.tick(60)
 
@@ -123,3 +120,8 @@ def main():
 if __name__ == "__main__":
     from games.connect4 import Connect4
     main()
+
+
+
+
+
