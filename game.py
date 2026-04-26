@@ -48,13 +48,30 @@ def main():
     pygame.display.set_caption("Mini Game Hub")
     clock = pygame.time.Clock()
 
-    bg = pygame.image.load("mainmenu_final_1000x700.png")
-#    connect4_img = pygame.image.load("connect4_button.png")
+    bg = pygame.image.load("game_hub.png")
+    connect4_img = pygame.image.load("connect4_button_cropped.png")
+    connect4_img = pygame.transform.scale(connect4_img, (302, 87))
+    tictactoe_img = pygame.image.load("tictactoe_button_transparent.png")
+    tictactoe_img = pygame.transform.scale(tictactoe_img, (302, 87))
+    othello_img = pygame.image.load("othello_button_transparent.png")
+    othello_img = pygame.transform.scale(othello_img, (302, 87))
 
-    connect4_rect  = pygame.Rect(349, 234, 302, 87)
-    othello_rect   = pygame.Rect(349, 336, 398, 79)
-    tictactoe_rect = pygame.Rect(352, 434, 388, 81)
+
+
     quit_rect = pygame.Rect(17,18,118,67)
+
+    
+    connect4_rect = connect4_img.get_rect(center=(349 + 302//2, 234 + 87//2))
+    tictactoe_rect = tictactoe_img.get_rect(center=(349 + 302//2, 434 + 87//2))
+    othello_rect = othello_img.get_rect(center=(349 + 302//2, 336 + 87//2))
+    
+    hover_size = (int(connect4_rect.width * 1.1), int(connect4_rect.height * 1.1))
+    connect4_hover_img = pygame.transform.smoothscale(connect4_img, hover_size)
+    connect4_hover_rect = connect4_hover_img.get_rect(center=connect4_rect.center)
+    tictactoe_hover_img = pygame.transform.smoothscale(tictactoe_img, hover_size)
+    tictactoe_hover_rect = connect4_hover_img.get_rect(center=tictactoe_rect.center)
+    othello_hover_img = pygame.transform.smoothscale(othello_img, hover_size)
+    othello_hover_rect = connect4_hover_img.get_rect(center=othello_rect.center)
     
     game_running = True
     while game_running:
@@ -83,35 +100,26 @@ def main():
 #                    game = othello(player1, player2)
 #                    winner, loser = game.run(screen)
 #                    record_result(winner, loser, "Connect-4")
-
-        mouse_pos = pygame.mouse.get_pos()
         screen.blit(bg,(0,0))
-
-        """
+        mouse_pos = pygame.mouse.get_pos()
         if connect4_rect.collidepoint(mouse_pos):
-            pygame.draw.rect(screen, button_hover, (x-10,210,connect4_width+20,52))
+            screen.blit(connect4_hover_img, connect4_hover_rect)
+            
         else:
-            pygame.draw.rect(screen, button_panel, (x-10,210,connect4_width+20,52))
-        screen.blit(connect4_button, (x,220))
-        
-        tictactoe_width = tictactoe_button.get_width()
-        x = (900 - tictactoe_width)//2
-        tictactoe_rect = pygame.Rect(x-10,310,tictactoe_width+20,52)
+            screen.blit(connect4_img, connect4_rect)
+            
         if tictactoe_rect.collidepoint(mouse_pos):
-            pygame.draw.rect(screen, button_hover, (x-10,310,tictactoe_width+20,52))
+            screen.blit(tictactoe_hover_img, tictactoe_hover_rect)
+            
         else:
-            pygame.draw.rect(screen, button_panel, (x-10,310,tictactoe_width+20,52))
-        screen.blit(tictactoe_button, (x,320))
-        
-        othello_width = othello_button.get_width()
-        x = (900 - othello_width)//2
-        othello_rect = pygame.Rect(x-10,410,othello_width+20,52)
+            screen.blit(tictactoe_img, tictactoe_rect)
+            
         if othello_rect.collidepoint(mouse_pos):
-            pygame.draw.rect(screen, button_hover, (x-10,410,othello_width+20,52))
+            screen.blit(othello_hover_img, othello_hover_rect)
+            
         else:
-            pygame.draw.rect(screen, button_panel, (x-10,410,othello_width+20,52))
-        screen.blit(othello_button, (x,420))
-        """
+            screen.blit(othello_img, othello_rect)
+            
         pygame.display.flip()
         clock.tick(60)
 

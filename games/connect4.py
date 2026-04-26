@@ -104,11 +104,12 @@ class Connect4(BaseGame):
         while self.running:
             screen.blit(self.bg1,(0,0))
             for event in pygame.event.get():
-                mouse_x, mouse_y = event.pos
+                
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    mouse_x, mouse_y = event.pos
                     if quit_rect.collidepoint(mouse_x, mouse_y):
                         self.running = False
                         return None, None
