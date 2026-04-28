@@ -112,11 +112,11 @@ class Connect4(BaseGame):
                     mouse_x, mouse_y = event.pos
                     if quit_rect.collidepoint(mouse_x, mouse_y):
                         self.running = False
-                        return None, None
+                        return None,None
                     if self.game_over:
                         winner = self.current_player
                         loser = self.player2 if self.current_player == self.player1 else self.player1
-                        return winner, loser
+                        return winner,loser
                     
                     column = (mouse_x - self.GRID_X) // self.CELL_SIZE
                     row = self.get_next_open_row(column)

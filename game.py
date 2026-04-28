@@ -29,9 +29,9 @@ class BaseGame:
         pass 
 
 
-def record_result(winner, loser, game_name):
+def record_result(winner,loser,game_name):
     with open("history.csv", "a") as f:
-        f.write(f"{winner}, {loser}, {date.today().isoformat()}, {game_name}\n")
+        f.write(f"{winner},{loser},{date.today().isoformat()},{game_name}\n")
 
 
 
@@ -88,8 +88,8 @@ def main():
                 if connect4_rect.collidepoint(mouse_x, mouse_y):
                     print("Connect4 selected.")
                     game = Connect4(player1, player2)
-                    winner, loser = game.run(screen)
-                    record_result(winner, loser, "Connect-4")
+                    winner,loser = game.run(screen)
+                    record_result(winner,loser,"Connect-4")
                 if tictactoe_rect.collidepoint(mouse_x, mouse_y):
                     print("Tic-Tac-Toe selected.")
 #                    game = tictactoe(player1, player2)
