@@ -1,47 +1,3 @@
-<<<<<<< HEAD
-
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-22, Othello
-None, None, 2026-04-29, Othello
-None, None, 2026-04-29, Othello
-None, None, 2026-04-29, Othello
-None, None, 2026-04-29, Othello
-None, None, 2026-04-29, Othello
-None, None, 2026-04-29, Othello
-None, None, 2026-04-29, Othello
-None, None, 2026-04-29, Othello
-None, None, 2026-04-29, Othello
-=======
 a,b,2026-04-28,Connect-4
 b,a,2026-04-28,Connect-4
 keshav,arnav,2026-04-28,Connect-4
@@ -71,31 +27,45 @@ None,None,2026-04-29,TicTacToe
 a,b,2026-04-29,Connect-4
 a,b,2026-04-29,Connect-4
 a,b,2026-04-29,Connect-4
->>>>>>> 046cf3c328613f846cddaefe1533da284d10ecbb
-a,b,2026-04-29,Othello
-a,b,2026-04-29,Othello
+a,b,2026-04-29,Connect-4
+b,a,2026-04-29,Connect-4
+b,a,2026-04-29,Connect-4
 a,b,2026-04-29,Connect-4
 a,b,2026-04-29,Connect-4
-None,None,2026-04-29,TicTacToe
-b,a,2026-04-29,Othello
-b,a,2026-04-29,Othello
-QUIT,QUIT,2026-04-29,TicTacToe
-QUIT,QUIT,2026-04-29,TicTacToe
-QUIT,QUIT,2026-04-29,TicTacToe
-QUIT,QUIT,2026-04-29,Othello
-QUIT,QUIT,2026-04-29,Othello
-QUIT,QUIT,2026-04-29,TicTacToe
-QUIT,QUIT,2026-04-29,Othello
-QUIT,QUIT,2026-04-29,Othello
-QUIT,QUIT,2026-04-29,Othello
-QUIT,QUIT,2026-04-29,Othello
-QUIT,QUIT,2026-04-29,TicTacToe
-QUIT,QUIT,2026-04-29,TicTacToe
-QUIT,QUIT,2026-04-29,Othello
-QUIT,QUIT,2026-04-29,TicTacToe
-QUIT,QUIT,2026-04-29,TicTacToe
-QUIT,QUIT,2026-04-29,TicTacToe
-QUIT,QUIT,2026-04-29,Othello
-QUIT,QUIT,2026-04-29,Othello
-QUIT,QUIT,2026-04-29,Othello
-QUIT,QUIT,2026-04-29,TicTacToe
+a,b,2026-04-29,Connect-4
+a,b,2026-04-29,Connect-4
+a,b,2026-04-29,Connect-4
+a,b,2026-04-29,Connect-4
+a,b,2026-04-29,Connect-4
+a,b,2026-04-29,Connect-4
+a,b,2026-04-29,TicTacToe
+a,b,2026-04-29,TicTacToe
+a,b,2026-04-29,Connect-4
+a,b,2026-04-29,TicTacToe
+a,b,2026-04-29,Connect-4
+a,b,2026-04-29,TicTacToe
+a,b,2026-04-29,Connect-4
+a,b,2026-04-29,Connect-4
+a,b,2026-04-29,Connect-4
+a,b,2026-04-29,Connect-4
+a,b,2026-04-29,Connect-4
+a,b,2026-04-29,Connect-4
+a,b,2026-04-29,Connect-4
+a,b,2026-04-29,TicTacToe
+Keshav,Arnav,2026-04-29,Connect-4
+Keshav,Arnav,2026-04-30,TicTacToe
+Keshav,Arnav,2026-04-30,Connect-4
+Arnav,Keshav,2026-04-30,Connect-4
+Keshav,Arnav,2026-04-30,Connect-4
+Arnav,Keshav,2026-04-30,TicTacToe
+Arnav,Keshav,2026-04-30,Connect-4
+QUIT,QUIT,2026-04-30,Othello
+QUIT,QUIT,2026-04-30,TicTacToe
+QUIT,QUIT,2026-04-30,Othello
+Arnav,Keshav,2026-04-30,Connect-4
+Arnav,Keshav,2026-04-30,Connect-4
+Arnav,Keshav,2026-04-30,Connect-4
+QUIT,QUIT,2026-04-30,Othello
+Arnav,Keshav,2026-04-30,TicTacToe
+QUIT,QUIT,2026-04-30,Othello
+Keshav,Arnav,2026-04-30,TicTacToe

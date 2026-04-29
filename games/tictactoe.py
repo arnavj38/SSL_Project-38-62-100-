@@ -4,47 +4,45 @@ import numpy as np
 from game import BaseGame
 from numpy.lib.stride_tricks import sliding_window_view
 
-GRID_X = 287 # x-offset of top left corner of grid
-GRID_Y = 147 # y-offset of top left corner of grid
-GRID_SIZE = 320 # width and height of grid
-GRID_N = 10 # number of cells in row and column
-CELL = GRID_SIZE // GRID_N # size of each cell
-PAD = CELL // 6 #space to be left in cell
+GRID_X = 287
+GRID_Y = 147
+GRID_SIZE = 320
+GRID_N = 10
+CELL = GRID_SIZE // GRID_N
+PAD = CELL // 6
 
-#colours
 WHITE = (255, 255, 255)
 CYAN = (0, 220, 255)
 PINK = (255, 60, 220)
 
 FONT = pygame.font.SysFont("consolas", 16, bold=True)
 
-# QUIT button area
 QUIT_RECT = pygame.Rect(30, 20, 120, 60)
 
-# defining position of a cell
+
 def cell_origin(row, col):
     return (GRID_X + col * CELL, GRID_Y + row * CELL)
 
-# getting cell index by its position
+
 def pixel_to_cell(px, py):
     if GRID_X <= px < GRID_X + GRID_SIZE and GRID_Y <= py < GRID_Y + GRID_SIZE:
         return (py - GRID_Y) // CELL, (px - GRID_X) // CELL
     return None
 
-# drawing X function
+
 def draw_x(screen, row, col):
     cx, cy = cell_origin(row, col)
     pygame.draw.line(screen, CYAN, (cx + PAD, cy + PAD), (cx + CELL - PAD, cy + CELL - PAD), 2)
     pygame.draw.line(screen, CYAN, (cx + CELL - PAD, cy + PAD), (cx + PAD, cy + CELL - PAD), 2)
 
-# drawing y function
+
 def draw_o(screen, row, col):
     cx, cy = cell_origin(row, col)
     center = (cx + CELL // 2, cy + CELL // 2)
     radius = (CELL // 2) - PAD
     pygame.draw.circle(screen, PINK, center, radius, 2)
 
-# the line which will connect the winning 5
+
 def draw_win_line(screen, game):
     if not game.win_line:
         return
@@ -68,7 +66,6 @@ class TicTacToe(BaseGame):
         self.winner = None
         self.win_line = None
 
-        # setting the background for the game
         self.bg = pygame.image.load("games/bg_images/tictactoe.png")
         self.bg = pygame.transform.scale(self.bg, (1000, 700))
 
@@ -76,7 +73,7 @@ class TicTacToe(BaseGame):
         if self.board[row, col] != 0 or self.game_over:
             return
 
-        self.board[row, col] = self.current_player 
+        self.board[row, col] = self.current_player
 
         win = self.check_win(self.current_player)
 
@@ -89,7 +86,7 @@ class TicTacToe(BaseGame):
             self.game_over = True
 
         else:
-            self.switch_turn()   
+            self.switch_turn()
 
     def check_win(self, piece):
         b = self.board
@@ -97,20 +94,23 @@ class TicTacToe(BaseGame):
         window = sliding_window_view(b, (1, 5))
         mask = np.all(window == piece, axis=3)
         if np.any(mask):
-            r, c = np.argwhere(mask)[0]
+            idx = np.argwhere(mask)[0]
+            r, c = idx[0], idx[1]
             return (r, c), (r, c + 4)
 
         window = sliding_window_view(b, (5, 1))
         mask = np.all(window == piece, axis=2)
         if np.any(mask):
-            r, c = np.argwhere(mask)[0]
+            idx = np.argwhere(mask)[0]
+            r, c = idx[0], idx[1]
             return (r, c), (r + 4, c)
 
         window = sliding_window_view(b, (5, 5))
         diag = np.diagonal(window, axis1=2, axis2=3)
         mask = np.all(diag == piece, axis=2)
         if np.any(mask):
-            r, c = np.argwhere(mask)[0]
+            idx = np.argwhere(mask)[0]
+            r, c = idx[0], idx[1]
             return (r, c), (r + 4, c + 4)
 
         flipped = np.fliplr(b)
@@ -118,7 +118,8 @@ class TicTacToe(BaseGame):
         diag = np.diagonal(window, axis1=2, axis2=3)
         mask = np.all(diag == piece, axis=2)
         if np.any(mask):
-            r, c = np.argwhere(mask)[0]
+            idx = np.argwhere(mask)[0]
+            r, c = idx[0], idx[1]
             n = b.shape[1]
             return (r, n - 1 - c), (r + 4, n - 1 - (c + 4))
 
@@ -137,9 +138,9 @@ class TicTacToe(BaseGame):
         if self.game_over:
             if self.winner:
                 name = self.player1 if self.winner == 1 else self.player2
-                msg = f"{name} wins! Press R / ESC"
+                msg = f"{name} wins! Click to continue"
             else:
-                msg = "Draw! Press R / ESC"
+                msg = "Draw! Click to continue"
         else:
             name = self.player1 if self.current_player == 1 else self.player2
             msg = f"Turn: {name}"
@@ -161,14 +162,21 @@ class TicTacToe(BaseGame):
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
+                    return None, None
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mx, my = pygame.mouse.get_pos()
 
                     if QUIT_RECT.collidepoint(mx, my):
-                        return "QUIT", "QUIT"
+                        return None, None
+
+                    if self.game_over:
+                        if self.winner == 1:
+                            return self.player1, self.player2
+                        elif self.winner == 2:
+                            return self.player2, self.player1
+                        else:
+                            return "Draw", "Draw"
 
                     cell = pixel_to_cell(mx, my)
                     if cell:
@@ -177,8 +185,5 @@ class TicTacToe(BaseGame):
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_r:
                         self.reset()
-
-                    if event.key == pygame.K_ESCAPE:
-                        return "QUIT", "QUIT"
 
             pygame.display.update()
