@@ -1,20 +1,20 @@
-# MINI GAME HUB
-## Keshav Bansal
-## Arnav Jindal
+# Mini Game Engine
+## Arnav 
+## Keshav
 
-This project is a multi-user game hub that combines Bash scripting and Python.
-It allows two users to log in, choose a game, play through a graphical interface, and view their results on a leaderboard.
+Project for the course CS108
 
-## Features
-	• Secure user authentication (SHA-256 hashed passwords)
-	• Two-player system
-	
-  Multiple games:
-	•	Tic-Tac-Toe (10×10, 5 in a row)
-	•	Othello
-	•	Connect Four
-	
-  • Graphical interface using Pygame
-	• Persistent leaderboard system
-	• Data visualization using Matplotlib
-	• Continuous play loop (play again or exit)
+> A multi-user game hub that integrates Bash scripting for authentication and pygame for gameplay.
+> 
+> Two authenticated players select a game from a menu, play via a graphical interface.
+> 
+> Results are recorded on a persistent leaderboard.
+>
+>For further information, refer to report
+
+
+## Usage
+Run as:
+```bash
+bash main.sh
+```
