@@ -1,8 +1,8 @@
 import sys
 import pygame
-import random
-
 from datetime import date
+
+
 bg_color = (5,5,30)
 white = (255,255,255)
 light_blue = (200,200,255)
@@ -14,15 +14,12 @@ class BaseGame:
     def __init__(self,player1,player2):
         self.player1 = player1
         self.player2 = player2
-        self.current_player = player1
+        self.current_player = 1
         self.board = None
         self.running = True
         self.game_over = False
     def switch_turn(self):
-        if self.current_player == self.player1:
-            self.current_player = self.player2
-        else:
-            self.current_player = self.player1
+        self.current_player = 2 if self.current_player == 1 else 1
     def check_win(self):
         pass
     def reset(self):
@@ -30,6 +27,8 @@ class BaseGame:
 
 
 def record_result(winner,loser,game_name):
+    if winner is None:
+        return
     with open("history.csv", "a") as f:
         f.write(f"{winner},{loser},{date.today().isoformat()},{game_name}\n")
 
@@ -69,9 +68,9 @@ def main():
     connect4_hover_img = pygame.transform.smoothscale(connect4_img, hover_size)
     connect4_hover_rect = connect4_hover_img.get_rect(center=connect4_rect.center)
     tictactoe_hover_img = pygame.transform.smoothscale(tictactoe_img, hover_size)
-    tictactoe_hover_rect = connect4_hover_img.get_rect(center=tictactoe_rect.center)
+    tictactoe_hover_rect = tictactoe_hover_img.get_rect(center=tictactoe_rect.center)
     othello_hover_img = pygame.transform.smoothscale(othello_img, hover_size)
-    othello_hover_rect = connect4_hover_img.get_rect(center=othello_rect.center)
+    othello_hover_rect = othello_hover_img.get_rect(center=othello_rect.center)
     
     game_running = True
     while game_running:
@@ -92,14 +91,16 @@ def main():
                     record_result(winner,loser,"Connect-4")
                 if tictactoe_rect.collidepoint(mouse_x, mouse_y):
                     print("Tic-Tac-Toe selected.")
-#                    game = tictactoe(player1, player2)
-#                    winner, loser = game.run(screen)
-#                    record_result(winner, loser, "Connect-4")
+                    game = TicTacToe(player1, player2)
+                    winner, loser = game.run(screen)
+                    record_result(winner, loser, "TicTacToe")
                 if othello_rect.collidepoint(mouse_x, mouse_y):
                     print("Othello selected.")
-#                    game = othello(player1, player2)
-#                    winner, loser = game.run(screen)
-#                    record_result(winner, loser, "Connect-4")
+                    game = Othello(player1, player2)
+                    winner, loser = game.run(screen)
+                    record_result(winner, loser, "Othello")
+
+
         screen.blit(bg,(0,0))
         mouse_pos = pygame.mouse.get_pos()
         if connect4_rect.collidepoint(mouse_pos):
@@ -127,6 +128,10 @@ def main():
 
 if __name__ == "__main__":
     from games.connect4 import Connect4
+    from games.othello import Othello
+    from games.tictactoe import TicTacToe
+
+
     main()
 
 

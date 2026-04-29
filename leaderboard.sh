@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 HISTORY_CSV="history.csv"
-SORT_BY="$1"
-
+SORT_BY="${1:-wins}"
 
 # Map sort metric to column
 SORT_COL=3
@@ -10,7 +9,7 @@ SORT_COL=3
 [[ "$SORT_BY" == "ratio"  ]] && SORT_COL=5
 
 echo ""
-echo "===== LEADERBOARD (sorted by: $SORT_BY) ====="
+echo "          LEADERBOARD (sorted by: $SORT_BY)        "
 echo ""
 
 printf "%-15s %-12s %-8s %-8s %-10s\n" "Player" "Game" "Wins" "Losses" "W/L Ratio"
@@ -22,7 +21,7 @@ awk -F',' '
     loser  = $2
     game   = $4
 
-    # clean data (important!)
+    # clean data
     gsub(/\r/, "", winner)
     gsub(/\r/, "", loser)
     gsub(/\r/, "", game)
@@ -31,10 +30,14 @@ awk -F',' '
     gsub(/^ +| +$/, "", loser)
     gsub(/^ +| +$/, "", game)
 
+    # 🔥 skip invalid / draw / exit rows
+    if (winner == "" || loser == "") next
+    if (winner == "Draw" && loser == "Draw") next
+    if (winner == "None" || loser == "None") next
+
     key_w = winner "|" game
     key_l = loser  "|" game
 
-    # update stats
     wins[key_w]++
     losses[key_l]++
 
