@@ -33,7 +33,7 @@ class Connect4(BaseGame):
 
         # fonts for displaying text
         self.font1 = pygame.font.Font("PressStart2P-Regular.ttf", 26)
-        self.font2 = pygame.font.Font("PressStart2P-Regular.ttf", 100)
+        self.font2 = pygame.font.Font("PressStart2P-Regular.ttf", 50)
 
         # background image for connect4
         self.bg1 = pygame.image.load("games/bg_images/Connect4_final.png")
