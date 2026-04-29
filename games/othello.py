@@ -11,19 +11,18 @@ WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Othello")
 
 
-GRID_SIZE = 578
+GRID_SIZE = 328
 GRID_N = 8
 CELL = GRID_SIZE // GRID_N
-GRID_X = (WIDTH - GRID_SIZE) // 2
-GRID_Y = 72
-
+GRID_X = 335
+GRID_Y = 144
 
 GREEN = (0, 120, 0)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GRAY  = (180, 180, 180)
 
-BG_IMAGE = pygame.image.load("games/bg_images/othello.png")
+BG_IMAGE = pygame.image.load("games/bg_images/othello4.png")
 BG_IMAGE = pygame.transform.scale(BG_IMAGE, (WIDTH,HEIGHT))
 
 
@@ -165,14 +164,6 @@ def draw_board(game):
     WIN.blit(BG_IMAGE, (0, 0))
 
     
-    for i in range(GRID_N + 1):
-        pygame.draw.line(WIN, BLACK,
-            (GRID_X, GRID_Y + i*CELL),
-            (GRID_X + GRID_SIZE, GRID_Y + i*CELL), 2)
-
-        pygame.draw.line(WIN, BLACK,
-            (GRID_X + i*CELL, GRID_Y),
-            (GRID_X + i*CELL, GRID_Y + GRID_SIZE), 2)
 
     
     for r in range(GRID_N):
