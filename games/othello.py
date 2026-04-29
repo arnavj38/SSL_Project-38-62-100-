@@ -2,6 +2,10 @@ import pygame
 import numpy as np
 import sys
 import os
+<<<<<<< HEAD
+=======
+from game import BaseGame
+>>>>>>> 046cf3c328613f846cddaefe1533da284d10ecbb
 
 pygame.init()
 
@@ -11,18 +15,31 @@ WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Othello")
 
 
+<<<<<<< HEAD
 GRID_SIZE = 328
 GRID_N = 8
 CELL = GRID_SIZE // GRID_N
 GRID_X = 335
 GRID_Y = 144
+=======
+GRID_SIZE = 578
+GRID_N = 8
+CELL = GRID_SIZE // GRID_N
+GRID_X = (WIDTH - GRID_SIZE) // 2
+GRID_Y = 72
+
+>>>>>>> 046cf3c328613f846cddaefe1533da284d10ecbb
 
 GREEN = (0, 120, 0)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GRAY  = (180, 180, 180)
 
+<<<<<<< HEAD
 BG_IMAGE = pygame.image.load("games/bg_images/othello4.png")
+=======
+BG_IMAGE = pygame.image.load("games/bg_images/othello.png")
+>>>>>>> 046cf3c328613f846cddaefe1533da284d10ecbb
 BG_IMAGE = pygame.transform.scale(BG_IMAGE, (WIDTH,HEIGHT))
 
 
@@ -34,11 +51,16 @@ DIRS = [(-1,-1), (-1,0), (-1,1),
         (1,-1), (1,0),  (1,1)]
 
 
+<<<<<<< HEAD
 
+=======
+'''
+>>>>>>> 046cf3c328613f846cddaefe1533da284d10ecbb
 class BoardGame:
     def __init__(self, p1, p2, size):
         self.player1 = p1
         self.player2 = p2
+<<<<<<< HEAD
         self.current_player = 1
         self.board = np.zeros((size, size), dtype=int)
 
@@ -51,6 +73,20 @@ class Othello(BoardGame):
     def __init__(self, p1, p2):
 
         super().__init__(p1, p2, GRID_N)
+=======
+        
+        self.board = np.zeros((GRID_N, GRID_N), dtype=int)
+
+    def switch_turn(self):
+        self.current_player = 2 if self.current_player == 1 else 1
+'''
+
+# ── Othello Class ──
+class Othello(BaseGame):
+    def __init__(self, p1, p2):
+        super().__init__(p1, p2)
+        self.board = np.zeros((GRID_N,GRID_N), dtype=int)
+>>>>>>> 046cf3c328613f846cddaefe1533da284d10ecbb
         self.init_board()
         self.game_over = False
 
@@ -164,6 +200,17 @@ def draw_board(game):
     WIN.blit(BG_IMAGE, (0, 0))
 
     
+<<<<<<< HEAD
+=======
+    for i in range(GRID_N + 1):
+        pygame.draw.line(WIN, BLACK,
+            (GRID_X, GRID_Y + i*CELL),
+            (GRID_X + GRID_SIZE, GRID_Y + i*CELL), 2)
+
+        pygame.draw.line(WIN, BLACK,
+            (GRID_X + i*CELL, GRID_Y),
+            (GRID_X + i*CELL, GRID_Y + GRID_SIZE), 2)
+>>>>>>> 046cf3c328613f846cddaefe1533da284d10ecbb
 
     
     for r in range(GRID_N):

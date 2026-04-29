@@ -1,6 +1,10 @@
 import pygame
 import sys
 import numpy as np
+<<<<<<< HEAD
+=======
+from game import BaseGame
+>>>>>>> 046cf3c328613f846cddaefe1533da284d10ecbb
 
 GRID_X = 290
 GRID_Y = 202
@@ -48,6 +52,7 @@ def draw_win_line(screen, game):
     color = CYAN if game.winner == 1 else PINK
     pygame.draw.line(screen, color, (x1, y1), (x2, y2), 5)
 
+<<<<<<< HEAD
 class TicTacToe:
     def __init__(self, p1, p2):
         self.player1 = p1
@@ -55,6 +60,12 @@ class TicTacToe:
         self.current_player = 1
         self.board = np.zeros((GRID_N, GRID_N), dtype=int)
         self.game_over = False
+=======
+class TicTacToe(BaseGame):
+    def __init__(self, p1, p2):
+        super().__init__(p1,p2)
+        self.board = np.zeros((GRID_N, GRID_N), dtype=int)
+>>>>>>> 046cf3c328613f846cddaefe1533da284d10ecbb
         self.winner = None
         self.win_line = None
 
@@ -156,6 +167,10 @@ class TicTacToe:
                         elif self.winner == 2:
                             return self.player2, self.player1
                         else:
+<<<<<<< HEAD
                             return "Draw", "Draw"
+=======
+                            return "None", "None"
+>>>>>>> 046cf3c328613f846cddaefe1533da284d10ecbb
 
             pygame.display.update()

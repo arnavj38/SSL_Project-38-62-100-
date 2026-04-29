@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 None, None, 2026-04-22, Othello
 None, None, 2026-04-22, Othello
@@ -40,3 +41,34 @@ None, None, 2026-04-29, Othello
 None, None, 2026-04-29, Othello
 None, None, 2026-04-29, Othello
 None, None, 2026-04-29, Othello
+=======
+a,b,2026-04-28,Connect-4
+b,a,2026-04-28,Connect-4
+keshav,arnav,2026-04-28,Connect-4
+None,None,2026-04-28,Connect-4
+None,None,2026-04-28,Othello
+b,a,2026-04-28,TicTacToe
+a,b,2026-04-28,TicTacToe
+a,b,2026-04-28,Othello
+a,b,2026-04-28,Othello
+a,b,2026-04-28,Othello
+a,b,2026-04-28,Othello
+b,a,2026-04-28,Connect-4
+a,b,2026-04-28,Othello
+Draw,Draw,2026-04-28,TicTacToe
+a,b,2026-04-28,Othello
+a,b,2026-04-28,Connect-4
+b,a,2026-04-28,Othello
+Draw,Draw,2026-04-28,TicTacToe
+None,None,2026-04-28,Connect-4
+None,None,2026-04-28,Othello
+Draw,Draw,2026-04-28,TicTacToe
+None,None,2026-04-28,Connect-4
+None,None,2026-04-28,TicTacToe
+a,b,2026-04-29,Connect-4
+a,b,2026-04-29,TicTacToe
+None,None,2026-04-29,TicTacToe
+a,b,2026-04-29,Connect-4
+a,b,2026-04-29,Connect-4
+a,b,2026-04-29,Connect-4
+>>>>>>> 046cf3c328613f846cddaefe1533da284d10ecbb

@@ -18,12 +18,18 @@ login() {
   done
   if ! grep -q "^${user}	" users.tsv; then
     read -p "This username does not exist. Do you want to register?(y/n)" reg
-    if [[ "$reg" == "y" ]]; then
-      register "${user}"
-    elif [[ "$reg" == "n" ]]; then
-      echo "Registration unsuccessfull. Please start the game again."
-      exit 0
-    fi
+    while true; do
+      if [[ "$reg" == "y" ]]; then
+        register "${user}"
+        break
+      elif [[ "$reg" == "n" ]]; then
+        echo "Registration unsuccessfull. Please start the game again."
+        exit 0
+      else
+        echo "This is not a valid input. Please try again."
+        read -p "Do you want to register?(y/n)" reg
+      fi
+    done
   else
     password_match="false"
 
@@ -50,9 +56,9 @@ login "$username1"
 
 # User-2 login:
 read -p "Enter username: " username2
-if [[ "$username1" == "$username2" ]]; then
+while [[ "$username1" == "$username2" ]]; do
   read -p "Please enter a different username: " username2
-fi
+done
 login "$username2"
 
 #Start the game with the two authenticated users
