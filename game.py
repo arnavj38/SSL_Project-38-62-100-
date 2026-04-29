@@ -14,7 +14,7 @@ cyan = (0,220,255)
 button_panel = (20,20,60)
 button_hover = (40,40,100)
 
-# graph colors
+# graph colors (pygame format)
 green_bar = (105,255,71)
 red_bar = (255,76,76)
 blue_bar = (71,200,255)
@@ -30,6 +30,11 @@ pie_colors = [
     (6,214,160),
     (255,0,110)
 ]
+
+# convert rgb (0-255) to matplotlib (0-1)
+def mpl_color(rgb):
+    return tuple(c/255 for c in rgb)
+
 
 class BaseGame:
     def __init__(self,player1,player2):
@@ -62,11 +67,9 @@ def record_result(winner,loser,game_name):
 def show_sort_menu(screen):
     clock = pygame.time.Clock()
 
-    # load background
     sort_bg = pygame.image.load("games/bg_images/sortmetric_bg.png")
     sort_bg = pygame.transform.scale(sort_bg, (1000, 700))
 
-    # load buttons
     wins_img = pygame.image.load("games/button_images/wins_button_transparent.png")
     losses_img = pygame.image.load("games/button_images/losses_button_transparent.png")
     ratio_img = pygame.image.load("games/button_images/wlratio_button_transparent.png")
@@ -75,12 +78,10 @@ def show_sort_menu(screen):
     losses_img = pygame.transform.scale(losses_img, (300, 80))
     ratio_img = pygame.transform.scale(ratio_img, (300, 80))
 
-    # button positions
     wins_rect = wins_img.get_rect(center=(500, 300))
     losses_rect = losses_img.get_rect(center=(500, 400))
     ratio_rect = ratio_img.get_rect(center=(500, 500))
 
-    # hover effect size
     hover_size = (330, 90)
 
     wins_hover = pygame.transform.smoothscale(wins_img, hover_size)
@@ -120,10 +121,8 @@ def show_sort_menu(screen):
                     show_graphs(screen)
                     return
 
-        # draw background
         screen.blit(sort_bg, (0, 0))
 
-        # draw buttons with hover
         if wins_rect.collidepoint(mouse_pos):
             screen.blit(wins_hover, wins_hover_rect)
         else:
@@ -143,7 +142,7 @@ def show_sort_menu(screen):
         clock.tick(60)
 
 
-# generate graphs using matplotlib
+# generate graphs
 def generate_graphs(sort_by):
     import matplotlib.font_manager as fm
 
@@ -152,7 +151,6 @@ def generate_graphs(sort_by):
 
     players, wins, losses, game_counts = [], [], [], {}
 
-    # read history file
     with open("history.csv", "r") as f:
         for line in f:
             parts = line.strip().split(",")
@@ -178,38 +176,45 @@ def generate_graphs(sort_by):
 
             game_counts[game] = game_counts.get(game, 0) + 1
 
-    # choose graph type
     if sort_by == "wins":
         values = wins
         title = "Wins Leaderboard"
-        bar_color = green_bar
+        bar_color = mpl_color(green_bar)
 
     elif sort_by == "losses":
         values = losses
         title = "Losses Leaderboard"
-        bar_color = red_bar
+        bar_color = mpl_color(red_bar)
 
     else:
         values = [round(wins[i] / losses[i], 2) if losses[i] else wins[i] for i in range(len(players))]
         title = "W/L Ratio Leaderboard"
-        bar_color = blue_bar
+        bar_color = mpl_color(blue_bar)
 
-    # bar graph
     fig, ax = plt.subplots(figsize=(11, 7))
     fig.patch.set_alpha(0)
-    ax.set_facecolor((0, 0, 0, 0))
+    ax.set_facecolor((0,0,0,0))
 
-    ax.bar(range(len(players)), values, color=bar_color, edgecolor=yellow)
+    ax.bar(range(len(players)), values,
+           color=bar_color,
+           edgecolor=mpl_color(yellow))
 
     ax.set_xticks(range(len(players)))
-    ax.set_xticklabels(players, rotation=25, fontproperties=pixel_prop, color=yellow)
+    ax.set_xticklabels(players, rotation=25,
+                       fontproperties=pixel_prop,
+                       color=mpl_color(yellow))
 
-    ax.tick_params(axis='y', colors=yellow)
+    ax.tick_params(axis='y', colors=mpl_color(yellow))
 
-    ax.set_title(title, color=yellow, fontproperties=pixel_prop)
+    ax.set_title(title,
+                 color=mpl_color(yellow),
+                 fontproperties=pixel_prop)
 
     for i, v in enumerate(values):
-        ax.text(i, v + 0.05, str(v), ha='center', color=yellow, fontproperties=pixel_prop)
+        ax.text(i, v + 0.05, str(v),
+                ha='center',
+                color=mpl_color(yellow),
+                fontproperties=pixel_prop)
 
     plt.savefig("bar_graph.png", transparent=True)
     plt.close()
@@ -218,26 +223,22 @@ def generate_graphs(sort_by):
     fig, ax = plt.subplots(figsize=(8, 8))
     fig.patch.set_alpha(0)
 
-    wedges, texts, autotexts = ax.pie(
+    ax.pie(
         list(game_counts.values()),
         labels=list(game_counts.keys()),
         autopct='%1.1f%%',
-        colors=pie_colors[:len(game_counts)]
+        colors=[mpl_color(c) for c in pie_colors]
     )
 
-    for t in texts:
-        t.set_fontproperties(pixel_prop)
-
-    for at in autotexts:
-        at.set_fontproperties(pixel_prop)
-
-    ax.set_title("Games Played Distribution", color=yellow, fontproperties=pixel_prop)
+    ax.set_title("Games Played Distribution",
+                 color=mpl_color(yellow),
+                 fontproperties=pixel_prop)
 
     plt.savefig("pie_graph.png", transparent=True)
     plt.close()
 
 
-# show graphs on screen
+# show graphs
 def show_graphs(screen):
     clock = pygame.time.Clock()
 
@@ -256,7 +257,6 @@ def show_graphs(screen):
         screen.blit(pie_img, pie_rect)
         screen.blit(bar_img, bar_rect)
 
-        # footer text
         text1 = font.render("Leaderboard printed on terminal", True, light_blue)
         text2 = font.render("CLICK ANYWHERE TO RETURN", True, light_blue)
 
@@ -273,7 +273,6 @@ def show_graphs(screen):
         clock.tick(60)
 
 
-# main menu
 def main():
     player1 = sys.argv[1]
     player2 = sys.argv[2]
@@ -283,21 +282,19 @@ def main():
     pygame.display.set_caption("Mini Game Hub")
     clock = pygame.time.Clock()
 
-    # load images
     bg = pygame.image.load("games/bg_images/game_hub.png")
+
     connect4_img = pygame.transform.scale(pygame.image.load("games/button_images/connect4_button_cropped.png"), (302,87))
     tictactoe_img = pygame.transform.scale(pygame.image.load("games/button_images/tictactoe_button_transparent.png"), (302,87))
     othello_img = pygame.transform.scale(pygame.image.load("games/button_images/othello_button_transparent.png"), (302,87))
 
     quit_rect = pygame.Rect(17,18,118,67)
 
-    # button positions
     connect4_rect = connect4_img.get_rect(center=(500, 280))
     tictactoe_rect = tictactoe_img.get_rect(center=(500, 480))
     othello_rect = othello_img.get_rect(center=(500, 380))
 
-    running = True
-    while running:
+    while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
